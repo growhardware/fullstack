@@ -4,3 +4,9 @@
 [submodule "backend"]
 	path = backend
 	url = https://github.com/growhardware/huertosAPI
+[submodule "org"]
+	path = org
+	url = https://github.com/growhardware/organization
+[submodule "foundation"]
+	path = foundation
+	url = https://github.com/growhardware/foundation
