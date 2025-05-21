@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6
+    container_name: gh_mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - growhardware-net
+
+  backend:
+    image: growhardware/backend
+    container_name: gh_backend
+    build: ./backend
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/growhardware
+    ports:
+      - '3000:1337'
+    depends_on:
+      - mongodb
+    networks:
+      - growhardware-net
+
+  io:
+    image: growhardware/io
+    container_name: gh_io
+    build: ./io
+    ports:
+      - '8080:8080'
+    depends_on:
+      - backend
+    networks:
+      - growhardware-net
+
+  ai-core:
+    build: ./ai-core
+    container_name: gh_ai
+    ports:
+      - '8000:8000'
+    networks:
+      - growhardware-net
+
+  esp32-emulator:
+    build: ./esp32-emulator
+    container_name: gh_emulator
+    environment:
+      - API_URL=${API_URL}
+      - WS_URL=${WS_URL}
+      - EMAIL=${EMAIL}
+      - PASSWORD=${PASSWORD}
+    ports:
+      - '8082:8082'
+    depends_on:
+      - backend
+    networks:
+      - growhardware-net
+
+  # gh_org:
+  #   image: squidfunk/mkdocs-material
+  #   container_name: gh_org
+  #   volumes:
+  #     - ./org:/docs
+  #   ports:
+  #     - '8001:8000'
+  #   working_dir: /docs
+  #   command: serve -a 0.0.0.0:8000
+  #   networks:
+  #     - growhardware-net
+
+  gh_org:
+    build: ./org # Asumiendo que ponés el Dockerfile ahí
+    container_name: gh_org
+    ports:
+      - '8001:8000'
+    working_dir: /docs
+    volumes:
+      - ./org:/docs
+    command: serve -a 0.0.0.0:8000
+    networks:
+      - growhardware-net
+
+  gh_foundation:
+    build: ./foundation
+    container_name: gh_foundation
+    ports:
+      - '8002:3000'
+    networks:
+      - growhardware-net
+
+networks:
+  growhardware-net:
+    driver: bridge
+
+volumes:
+  mongo_data:

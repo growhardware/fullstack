@@ -1,0 +1,7 @@
+# 🌿 GrowHardware .env - Producción (ESP32 real)
+# docker compose --env-file .env.production up --build
+
+API_URL=http://host.docker.internal:3000
+WS_URL=ws://host.docker.internal:3000/ws
+EMAIL=hola@hola.io
+PASSWORD=hola

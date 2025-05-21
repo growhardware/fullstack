@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    environment:
+      - MONGO_URL=${MONGO_URL}
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    environment:
+      - VITE_BACKEND_URL=${VITE_BACKEND_URL}
+    depends_on:
+      - backend
+
+  ai-core:
+    build: ./ai-core
+    environment:
+      - PORT=8000
+
+  esp32-emulator:
+    build: ./esp32-emulator
+    environment:
+      - API_URL=${API_URL}
+      - WS_URL=${WS_URL}
+      - EMAIL=${EMAIL}
+      - PASSWORD=${PASSWORD}
+    depends_on:
+      - backend
+
+  mongodb:
+    image: mongo:6
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

@@ -1,0 +1,18 @@
+
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>GrowHardware Setup</title></head>
+<body>
+  <h1>🌱 GrowHardware - Modo Setup</h1>
+  <button onclick="fetchLog()">📋 Ver log</button>
+  <pre id="log">Presiona el botón para ver el estado.</pre>
+<script>
+function fetchLog() {
+  fetch('/log')
+    .then(r => r.text())
+    .then(t => document.getElementById('log').textContent = t)
+    .catch(e => document.getElementById('log').textContent = 'Error al conectar');
+}
+</script>
+</body>
+</html>

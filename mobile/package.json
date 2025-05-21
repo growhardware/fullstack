@@ -1,0 +1,13 @@
+{
+  "name": "growhardware-mobile",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "android": "ns run android",
+    "ios": "ns run ios"
+  },
+  "dependencies": {
+    "@nativescript/core": "~8.5.0",
+    "@nativescript/theme": "^3.0.1"
+  }
+}

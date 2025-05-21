@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  esp32-emulator:
+    environment:
+      - API_URL=http://host.docker.internal:3000
+      - WS_URL=ws://host.docker.internal:3000/ws
+    ports:
+      - '8082:8082'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
