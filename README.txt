@@ -4,7 +4,9 @@ GrowHardware – Stack Dockerizado
    - ./backend  (Sails.js)
    - ./io (frontend React + Tailwind)
 
-2. Usá este comando para levantar todo:
+2. Renombrá .env.sample a .env
+
+3. Usá este comando para levantar todo:
    make up
 
 Servicios:
