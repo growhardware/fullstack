@@ -1,0 +1,6 @@
+[submodule "io"]
+	path = io
+	url = https://github.com/growhardware/huertos-ui
+[submodule "backend"]
+	path = backend
+	url = https://github.com/growhardware/huertosAPI
