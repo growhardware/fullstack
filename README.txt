@@ -6,7 +6,9 @@ GrowHardware – Stack Dockerizado
 
 2. Renombrá .env.sample a .env
 
-3. Usá este comando para levantar todo:
+3. Usá estos comandos para levantar todo:
+   git sumodule init
+   git sumodule update
    make up
 
 Servicios:
