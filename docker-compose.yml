@@ -40,6 +40,8 @@ services:
     container_name: gh_ai
     ports:
       - '8000:8000'
+    volumes:
+      - ./ai-core:/app
     networks:
       - growhardware-net
 
