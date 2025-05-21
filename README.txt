@@ -5,7 +5,7 @@ GrowHardware – Stack Dockerizado
    - ./io (frontend React + Tailwind)
 
 2. Usá este comando para levantar todo:
-   docker compose up --build
+   make up
 
 Servicios:
 - AI-core:                       http://localhost:8000
