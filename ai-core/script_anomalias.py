@@ -32,5 +32,6 @@ model.compile(optimizer='adam', loss='mse')
 model.fit(X_norm, X_norm, epochs=100, verbose=1)
 
 # Guardar modelo
-model.save("model/autoencoder.h5")
+# model.save("model/autoencoder.h5")
+model.save("model/autoencoder.h5", include_optimizer=False)
 print("✅ Autoencoder guardado en model/autoencoder.h5")
