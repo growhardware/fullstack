@@ -1,0 +1,11 @@
+{
+  "deploy": {
+    "services": [
+      {
+        "name": "mosquitto",
+        "ports": [1883, 9001],
+        "protocols": ["tcp", "tcp"]
+      }
+    ]
+  }
+}

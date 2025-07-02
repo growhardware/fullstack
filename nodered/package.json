@@ -1,0 +1,12 @@
+{
+  "name": "Garden-brain",
+  "description": "Computer interface between medulla machines and huertos-API.",
+  "version": "0.0.1",
+  "dependencies": {},
+  "node-red": {
+    "plan": {
+      "flowFile": "gardenflows.json",
+      "credentialsFile": "gardenflows_cred.json"
+    }
+  }
+}
