@@ -16,6 +16,8 @@ Servicios:
 - Backend Sails:                 http://localhost:3000
 - ESP32 Emulado:                 http://localhost:8082/capture
 - MongoDB:                       http://localhost:27017
+- Node-RED:                      http://localhost:1880
+- MQTT:                          http://localhost:1883
 - Frontend React (.io):          http://localhost:8080
 - Frontend Mkdocs (.org):        http://localhost:8001
 - Frontend React (.foundation):  http://localhost:8002
