@@ -1,5 +1,5 @@
 .env
 .env.development
 .env.production
-
+nodered/.npm/*
 ai-core/.venv/*
