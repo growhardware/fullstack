@@ -1,0 +1,1537 @@
+[
+  {
+    "id": "bba613a22c436b3f",
+    "type": "tab",
+    "label": "Main",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "0183564e011a045c",
+    "type": "tab",
+    "label": "Ejemplo",
+    "disabled": true,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "2fb2172c90669194",
+    "type": "tab",
+    "label": "Orchard Brain",
+    "disabled": true,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "29efcda7762b3935",
+    "type": "sails-config",
+    "host": "http://localhost",
+    "port": "1337"
+  },
+  {
+    "id": "36a492ea7d8abe13",
+    "type": "serial-port",
+    "name": "",
+    "serialport": "COM3",
+    "serialbaud": "9600",
+    "databits": "8",
+    "parity": "none",
+    "stopbits": "1",
+    "waitfor": "",
+    "dtr": "none",
+    "rts": "none",
+    "cts": "none",
+    "dsr": "none",
+    "newline": "\\n",
+    "bin": "false",
+    "out": "char",
+    "addchar": "",
+    "responsetimeout": "10000"
+  },
+  {
+    "id": "fdf9a2a2ec7e84ea",
+    "type": "serial-port",
+    "serialport": "/dev/ttyACM0",
+    "serialbaud": "9600",
+    "databits": "8",
+    "parity": "none",
+    "stopbits": "1",
+    "waitfor": "",
+    "dtr": "none",
+    "rts": "none",
+    "cts": "none",
+    "dsr": "none",
+    "newline": "\\n",
+    "bin": "false",
+    "out": "char",
+    "addchar": "",
+    "responsetimeout": "10000"
+  },
+  {
+    "id": "0f405a4c1ace98ab",
+    "type": "sails-config",
+    "host": "http://192.168.1.48",
+    "port": "1337"
+  },
+  {
+    "id": "8f029f8dd8b3645c",
+    "type": "sails-out",
+    "z": "bba613a22c436b3f",
+    "server": "29efcda7762b3935",
+    "namespace": "",
+    "name": "API",
+    "x": 590,
+    "y": 80,
+    "wires": [["963192f04ecbdebe", "5a415f58d510ae76"]]
+  },
+  {
+    "id": "90dceb995900eef6",
+    "type": "inject",
+    "z": "bba613a22c436b3f",
+    "name": "login",
+    "props": [
+      {
+        "p": "timestamp",
+        "v": "",
+        "vt": "date"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.7",
+    "topic": "",
+    "x": 150,
+    "y": 80,
+    "wires": [["5d800b9792574bd0"]]
+  },
+  {
+    "id": "963192f04ecbdebe",
+    "type": "debug",
+    "z": "bba613a22c436b3f",
+    "name": "Sails",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 930,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "5d800b9792574bd0",
+    "type": "change",
+    "z": "bba613a22c436b3f",
+    "name": "login req",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "{\"emailAddress\":\"dinho@goat.gub\",\"password\":\"1234\"}",
+        "tot": "json"
+      },
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "/api/v1/entrance/login",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "method",
+        "pt": "msg",
+        "to": "put",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 360,
+    "y": 80,
+    "wires": [["8f029f8dd8b3645c"]]
+  },
+  {
+    "id": "e08bbb65a145d251",
+    "type": "change",
+    "z": "bba613a22c436b3f",
+    "name": "devices get req",
+    "rules": [
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "/device/get",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "method",
+        "pt": "msg",
+        "to": "get",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "room",
+        "pt": "msg",
+        "to": "device",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 900,
+    "y": 160,
+    "wires": [["8f029f8dd8b3645c"]]
+  },
+  {
+    "id": "2072a861c09a1fe4",
+    "type": "serial in",
+    "z": "bba613a22c436b3f",
+    "name": "medulla",
+    "serial": "36a492ea7d8abe13",
+    "x": 150,
+    "y": 380,
+    "wires": [["47289107e663c9cf"]]
+  },
+  {
+    "id": "c4175f4e5ea9a2e0",
+    "type": "debug",
+    "z": "bba613a22c436b3f",
+    "name": "Device",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 930,
+    "y": 380,
+    "wires": []
+  },
+  {
+    "id": "acc5d1abe51c3b09",
+    "type": "serial out",
+    "z": "bba613a22c436b3f",
+    "name": "medulla",
+    "serial": "36a492ea7d8abe13",
+    "x": 940,
+    "y": 300,
+    "wires": []
+  },
+  {
+    "id": "f3983e9edc18ea61",
+    "type": "change",
+    "z": "bba613a22c436b3f",
+    "name": "device 8 patch req",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload.id",
+        "pt": "msg",
+        "to": "8",
+        "tot": "num"
+      },
+      {
+        "t": "set",
+        "p": "method",
+        "pt": "msg",
+        "to": "patch",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "/device/8",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 210,
+    "y": 200,
+    "wires": [["8f029f8dd8b3645c"]]
+  },
+  {
+    "id": "47289107e663c9cf",
+    "type": "json",
+    "z": "bba613a22c436b3f",
+    "name": "",
+    "property": "payload",
+    "action": "",
+    "pretty": false,
+    "x": 310,
+    "y": 380,
+    "wires": [["c4175f4e5ea9a2e0", "f3983e9edc18ea61"]]
+  },
+  {
+    "id": "5a415f58d510ae76",
+    "type": "switch",
+    "z": "bba613a22c436b3f",
+    "name": "topic",
+    "property": "topic",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "/api/v1/entrance/login",
+        "vt": "str"
+      },
+      {
+        "t": "cont",
+        "v": "/device/",
+        "vt": "str"
+      },
+      {
+        "t": "else"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 3,
+    "x": 470,
+    "y": 220,
+    "wires": [["00498d3dc96b8227"], ["83cb18600426d0b4"], ["53d4aeb89b215b67"]]
+  },
+  {
+    "id": "83cb18600426d0b4",
+    "type": "change",
+    "z": "bba613a22c436b3f",
+    "name": "send payload.plan",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "payload.plan",
+        "tot": "msg"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 700,
+    "y": 220,
+    "wires": [["acc5d1abe51c3b09"]]
+  },
+  {
+    "id": "53d4aeb89b215b67",
+    "type": "switch",
+    "z": "bba613a22c436b3f",
+    "name": "If verb \"updated\"",
+    "property": "verb",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "updated",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 1,
+    "x": 480,
+    "y": 300,
+    "wires": [["487bcf40628dc038"]]
+  },
+  {
+    "id": "487bcf40628dc038",
+    "type": "change",
+    "z": "bba613a22c436b3f",
+    "name": "send data.plan",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "data.plan",
+        "tot": "msg"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 710,
+    "y": 300,
+    "wires": [["acc5d1abe51c3b09"]]
+  },
+  {
+    "id": "00498d3dc96b8227",
+    "type": "switch",
+    "z": "bba613a22c436b3f",
+    "name": "If login OK",
+    "property": "payload",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "OK",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 1,
+    "x": 670,
+    "y": 160,
+    "wires": [["e08bbb65a145d251"]]
+  },
+  {
+    "id": "8d68b821f81762c1",
+    "type": "sails-out",
+    "z": "0183564e011a045c",
+    "server": "29efcda7762b3935",
+    "namespace": "",
+    "name": "API",
+    "x": 710,
+    "y": 160,
+    "wires": [["33a989a807a6ac14", "d628f0979a4f85cc"]]
+  },
+  {
+    "id": "6bd73a637fb515f2",
+    "type": "inject",
+    "z": "0183564e011a045c",
+    "name": "login",
+    "props": [
+      {
+        "p": "timestamp",
+        "v": "",
+        "vt": "date"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.7",
+    "topic": "",
+    "x": 150,
+    "y": 60,
+    "wires": [["ad229167b31ed02b"]]
+  },
+  {
+    "id": "33a989a807a6ac14",
+    "type": "debug",
+    "z": "0183564e011a045c",
+    "name": "Sails",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 890,
+    "y": 160,
+    "wires": []
+  },
+  {
+    "id": "c5437e71a4691687",
+    "type": "inject",
+    "z": "0183564e011a045c",
+    "name": "get devices",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 150,
+    "y": 240,
+    "wires": [["6f7c1e3bfd08bab6"]]
+  },
+  {
+    "id": "05083f3c6726c941",
+    "type": "inject",
+    "z": "0183564e011a045c",
+    "name": "Create a device",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 160,
+    "y": 140,
+    "wires": [["4520b6c1440d77c1"]]
+  },
+  {
+    "id": "ad229167b31ed02b",
+    "type": "change",
+    "z": "0183564e011a045c",
+    "name": "login req",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "{\"emailAddress\":\"dinho@goat.gub\",\"password\":\"1234\"}",
+        "tot": "json"
+      },
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "/api/v1/entrance/login",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "method",
+        "pt": "msg",
+        "to": "put",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 360,
+    "y": 60,
+    "wires": [["8d68b821f81762c1"]]
+  },
+  {
+    "id": "4520b6c1440d77c1",
+    "type": "change",
+    "z": "0183564e011a045c",
+    "name": "device post req",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "{\"alias\":\"concept\",\"kind\":\"concept-medulla\",\"port\":\"COM3\",\"status\":{\"pushButton\":false,\"led\":false}}",
+        "tot": "json"
+      },
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "/device",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 400,
+    "y": 140,
+    "wires": [["8d68b821f81762c1"]]
+  },
+  {
+    "id": "6f7c1e3bfd08bab6",
+    "type": "change",
+    "z": "0183564e011a045c",
+    "name": "devices get req",
+    "rules": [
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "/device/get",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "method",
+        "pt": "msg",
+        "to": "get",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "room",
+        "pt": "msg",
+        "to": "device",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 380,
+    "y": 200,
+    "wires": [["8d68b821f81762c1"]]
+  },
+  {
+    "id": "6d60b124a555f7c3",
+    "type": "serial in",
+    "z": "0183564e011a045c",
+    "name": "medulla",
+    "serial": "36a492ea7d8abe13",
+    "x": 190,
+    "y": 540,
+    "wires": [["eef367aa5881d3d8"]]
+  },
+  {
+    "id": "f81ae87ba3f6e51b",
+    "type": "debug",
+    "z": "0183564e011a045c",
+    "name": "cuca dice",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 880,
+    "y": 540,
+    "wires": []
+  },
+  {
+    "id": "885b6dc1399ad25e",
+    "type": "inject",
+    "z": "0183564e011a045c",
+    "name": "LED on",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "enciende led",
+    "payload": "{\"led\":true,\"report\":true}",
+    "payloadType": "json",
+    "x": 190,
+    "y": 420,
+    "wires": [["5758fe852de4e114"]]
+  },
+  {
+    "id": "5758fe852de4e114",
+    "type": "serial out",
+    "z": "0183564e011a045c",
+    "name": "",
+    "serial": "36a492ea7d8abe13",
+    "x": 870,
+    "y": 460,
+    "wires": []
+  },
+  {
+    "id": "6d17c4eaa4223671",
+    "type": "inject",
+    "z": "0183564e011a045c",
+    "name": "LED off",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "apaga led",
+    "payload": "{\"led\":false,\"report\":true}",
+    "payloadType": "json",
+    "x": 190,
+    "y": 480,
+    "wires": [["5758fe852de4e114"]]
+  },
+  {
+    "id": "3e71fd85480482df",
+    "type": "inject",
+    "z": "0183564e011a045c",
+    "name": "update device 8",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "{}",
+    "payloadType": "json",
+    "x": 160,
+    "y": 320,
+    "wires": [["4408efc402f7aed5"]]
+  },
+  {
+    "id": "4408efc402f7aed5",
+    "type": "change",
+    "z": "0183564e011a045c",
+    "name": "device 8 patch req",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload.id",
+        "pt": "msg",
+        "to": "8",
+        "tot": "num"
+      },
+      {
+        "t": "set",
+        "p": "method",
+        "pt": "msg",
+        "to": "patch",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "/device/8",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 430,
+    "y": 260,
+    "wires": [["8d68b821f81762c1"]]
+  },
+  {
+    "id": "eef367aa5881d3d8",
+    "type": "json",
+    "z": "0183564e011a045c",
+    "name": "",
+    "property": "payload",
+    "action": "",
+    "pretty": false,
+    "x": 430,
+    "y": 540,
+    "wires": [["f81ae87ba3f6e51b", "4408efc402f7aed5"]]
+  },
+  {
+    "id": "d628f0979a4f85cc",
+    "type": "switch",
+    "z": "0183564e011a045c",
+    "name": "topic",
+    "property": "topic",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "/api/v1/entrance/login",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "/device",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "/device/get",
+        "vt": "str"
+      },
+      {
+        "t": "cont",
+        "v": "/device/",
+        "vt": "str"
+      },
+      {
+        "t": "else"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 5,
+    "x": 670,
+    "y": 300,
+    "wires": [
+      ["6f7c1e3bfd08bab6"],
+      [],
+      [],
+      ["6562fd707b2bb660"],
+      ["a84389cb9ec50e41"]
+    ]
+  },
+  {
+    "id": "6562fd707b2bb660",
+    "type": "switch",
+    "z": "0183564e011a045c",
+    "name": "Not Get",
+    "property": "topic",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "neq",
+        "v": "/device/get",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 1,
+    "x": 500,
+    "y": 380,
+    "wires": [["b49da1433e68a499"]]
+  },
+  {
+    "id": "b49da1433e68a499",
+    "type": "change",
+    "z": "0183564e011a045c",
+    "name": "send payload.plan",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "payload.plan",
+        "tot": "msg"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 700,
+    "y": 400,
+    "wires": [["5758fe852de4e114"]]
+  },
+  {
+    "id": "a84389cb9ec50e41",
+    "type": "switch",
+    "z": "0183564e011a045c",
+    "name": "If verb \"updated\"",
+    "property": "verb",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "updated",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 1,
+    "x": 840,
+    "y": 300,
+    "wires": [["f1a4da025f7776d3"]]
+  },
+  {
+    "id": "f1a4da025f7776d3",
+    "type": "change",
+    "z": "0183564e011a045c",
+    "name": "send data.plan",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "data.plan",
+        "tot": "msg"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 970,
+    "y": 380,
+    "wires": [["5758fe852de4e114"]]
+  },
+  {
+    "id": "907ccff179b1215e",
+    "type": "serial in",
+    "z": "2fb2172c90669194",
+    "name": "CONCEPT-MEDULLA",
+    "serial": "fdf9a2a2ec7e84ea",
+    "x": 420,
+    "y": 440,
+    "wires": [["268fc86cb5fee975", "974e965cc72dddfd"]]
+  },
+  {
+    "id": "4ff4ef912cfe4c7c",
+    "type": "debug",
+    "z": "2fb2172c90669194",
+    "name": "DEBUGGER",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1150,
+    "y": 660,
+    "wires": []
+  },
+  {
+    "id": "c17a6946f74b9ed5",
+    "type": "serial out",
+    "z": "2fb2172c90669194",
+    "name": "CONCEPT-MEDULLA",
+    "serial": "fdf9a2a2ec7e84ea",
+    "x": 1340,
+    "y": 560,
+    "wires": []
+  },
+  {
+    "id": "37ae9020a3b69d30",
+    "type": "sails-out",
+    "z": "2fb2172c90669194",
+    "server": "0f405a4c1ace98ab",
+    "namespace": "",
+    "name": "",
+    "x": 670,
+    "y": 560,
+    "wires": [["a54747622f02bbeb", "d4558135db49f843"]]
+  },
+  {
+    "id": "a54747622f02bbeb",
+    "type": "switch",
+    "z": "2fb2172c90669194",
+    "name": "topic switch",
+    "property": "topic",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "/api/v1/entrance/login",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "/device/get",
+        "vt": "str"
+      },
+      {
+        "t": "cont",
+        "v": "/device",
+        "vt": "str"
+      },
+      {
+        "t": "else"
+      }
+    ],
+    "checkall": "false",
+    "repair": false,
+    "outputs": 4,
+    "x": 410,
+    "y": 760,
+    "wires": [
+      ["8cd88416a85f2206"],
+      ["25ecfad8dc7fd9b0"],
+      ["fdf78eeaa2efc9a2"],
+      ["cb41deba9c278b75"]
+    ]
+  },
+  {
+    "id": "0af6966b46db52d8",
+    "type": "change",
+    "z": "2fb2172c90669194",
+    "name": "Get devices",
+    "rules": [
+      {
+        "t": "delete",
+        "p": "payload",
+        "pt": "msg"
+      },
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "/device/get",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "room",
+        "pt": "msg",
+        "to": "device",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "method",
+        "pt": "msg",
+        "to": "get",
+        "tot": "str"
+      },
+      {
+        "t": "delete",
+        "p": "rc",
+        "pt": "msg"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 790,
+    "y": 680,
+    "wires": [["37ae9020a3b69d30", "17184aa3462b9868"]]
+  },
+  {
+    "id": "79d3dee5cd60d3f2",
+    "type": "function",
+    "z": "2fb2172c90669194",
+    "name": "Recognize devices",
+    "func": "/*\nThis function iterates the devices list incoming from\nthe API, to recognize 'managed' devices.\n*/\nconst managed = global.get('config').managing;\nconst devices = flow.get('myDevices');\n\nconst recognized = devices.filter((d) => {\n    const alias = d.alias;\n    if (managed.includes(alias)){\n        return true;\n    } else {\n        return false;\n    }\n});\n// RED.util.setMessageProperty(msg, 'apiDevs', devices);\nRED.util.setMessageProperty(msg, 'recognizedDevices', recognized);\nglobal.set('managingDevices', recognized);\n\nreturn msg;",
+    "outputs": 1,
+    "timeout": "",
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 810,
+    "y": 880,
+    "wires": [["68dfa321b1839e50"]]
+  },
+  {
+    "id": "96c64d2678edb81b",
+    "type": "file in",
+    "z": "2fb2172c90669194",
+    "name": "Read Config",
+    "filename": "/home/obrain/.node-red/projects/orchard-brain/config.json",
+    "filenameType": "str",
+    "format": "utf8",
+    "chunk": false,
+    "sendError": false,
+    "encoding": "none",
+    "allProps": false,
+    "x": 690,
+    "y": 360,
+    "wires": [["2f42e507194e660e"]]
+  },
+  {
+    "id": "2f42e507194e660e",
+    "type": "json",
+    "z": "2fb2172c90669194",
+    "name": "",
+    "property": "payload",
+    "action": "",
+    "pretty": false,
+    "x": 890,
+    "y": 400,
+    "wires": [["321c4d6cf973d8c9"]]
+  },
+  {
+    "id": "8cd88416a85f2206",
+    "type": "switch",
+    "z": "2fb2172c90669194",
+    "name": "if OK",
+    "property": "rc",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "200",
+        "vt": "num"
+      },
+      {
+        "t": "else"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 630,
+    "y": 760,
+    "wires": [["0af6966b46db52d8"], ["4ff4ef912cfe4c7c"]]
+  },
+  {
+    "id": "25ecfad8dc7fd9b0",
+    "type": "switch",
+    "z": "2fb2172c90669194",
+    "name": "if OK",
+    "property": "rc",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "200",
+        "vt": "num"
+      },
+      {
+        "t": "else"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 630,
+    "y": 820,
+    "wires": [["350591f2ab02280a"], ["4ff4ef912cfe4c7c"]]
+  },
+  {
+    "id": "350591f2ab02280a",
+    "type": "change",
+    "z": "2fb2172c90669194",
+    "name": "Store devices",
+    "rules": [
+      {
+        "t": "set",
+        "p": "myDevices",
+        "pt": "flow",
+        "to": "payload",
+        "tot": "msg"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 800,
+    "y": 820,
+    "wires": [["79d3dee5cd60d3f2"]]
+  },
+  {
+    "id": "dd0f516c6c1f5366",
+    "type": "watch",
+    "z": "2fb2172c90669194",
+    "name": "watch config.json",
+    "files": "/home/obrain/.node-red/projects/orchard-brain/config.json",
+    "recursive": "",
+    "x": 680,
+    "y": 420,
+    "wires": [["2f42e507194e660e"]]
+  },
+  {
+    "id": "321c4d6cf973d8c9",
+    "type": "change",
+    "z": "2fb2172c90669194",
+    "name": "store config",
+    "rules": [
+      {
+        "t": "set",
+        "p": "config",
+        "pt": "global",
+        "to": "payload",
+        "tot": "msg"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 1070,
+    "y": 400,
+    "wires": [["4fb0193abf3d750d"]]
+  },
+  {
+    "id": "8f7a264a2d79e93e",
+    "type": "inject",
+    "z": "2fb2172c90669194",
+    "name": "Start",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 510,
+    "y": 360,
+    "wires": [["96c64d2678edb81b"]]
+  },
+  {
+    "id": "4fb0193abf3d750d",
+    "type": "change",
+    "z": "2fb2172c90669194",
+    "name": "Login",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "{\"emailAddress\":\"deleon@pc.uy\",\"password\":\"bolso10\"}",
+        "tot": "json"
+      },
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "/api/v1/entrance/login",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "method",
+        "pt": "msg",
+        "to": "put",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 910,
+    "y": 460,
+    "wires": [["37ae9020a3b69d30", "17184aa3462b9868"]]
+  },
+  {
+    "id": "974e965cc72dddfd",
+    "type": "debug",
+    "z": "2fb2172c90669194",
+    "name": "INPUT from SERIAL",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 700,
+    "y": 480,
+    "wires": []
+  },
+  {
+    "id": "268fc86cb5fee975",
+    "type": "json",
+    "z": "2fb2172c90669194",
+    "name": "",
+    "property": "payload",
+    "action": "",
+    "pretty": false,
+    "x": 430,
+    "y": 500,
+    "wires": [["fe5b1f1a13a89ba1"]]
+  },
+  {
+    "id": "68dfa321b1839e50",
+    "type": "switch",
+    "z": "2fb2172c90669194",
+    "name": "Is array",
+    "property": "recognizedDevices",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "istype",
+        "v": "array",
+        "vt": "array"
+      },
+      {
+        "t": "else"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 1000,
+    "y": 860,
+    "wires": [["245e39e866cd39c6"], ["4ff4ef912cfe4c7c"]]
+  },
+  {
+    "id": "245e39e866cd39c6",
+    "type": "change",
+    "z": "2fb2172c90669194",
+    "name": "Set Device",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "recognizedDevices[0].plan",
+        "tot": "msg"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 1170,
+    "y": 820,
+    "wires": [["b01497c9c0c16e37"]]
+  },
+  {
+    "id": "b01497c9c0c16e37",
+    "type": "json",
+    "z": "2fb2172c90669194",
+    "name": "",
+    "property": "payload",
+    "action": "",
+    "pretty": false,
+    "x": 1370,
+    "y": 860,
+    "wires": [["c17a6946f74b9ed5", "beaaec7f8c83b2d0"]]
+  },
+  {
+    "id": "7a534dfad1723d83",
+    "type": "change",
+    "z": "2fb2172c90669194",
+    "name": "Report to API",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload.id",
+        "pt": "msg",
+        "to": "managingDevices[0].id",
+        "tot": "global"
+      },
+      {
+        "t": "set",
+        "p": "method",
+        "pt": "msg",
+        "to": "patch",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "\"/device/\" & msg.payload.id",
+        "tot": "jsonata"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 420,
+    "y": 640,
+    "wires": [["37ae9020a3b69d30", "17184aa3462b9868"]]
+  },
+  {
+    "id": "cb41deba9c278b75",
+    "type": "switch",
+    "z": "2fb2172c90669194",
+    "name": "if updated",
+    "property": "verb",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "updated",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 1,
+    "x": 620,
+    "y": 1020,
+    "wires": [["d0e5193c02280db0"]]
+  },
+  {
+    "id": "d0e5193c02280db0",
+    "type": "change",
+    "z": "2fb2172c90669194",
+    "name": "Set updated device",
+    "rules": [
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "data.plan",
+        "tot": "msg"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 870,
+    "y": 1020,
+    "wires": [["b01497c9c0c16e37"]]
+  },
+  {
+    "id": "d4558135db49f843",
+    "type": "debug",
+    "z": "2fb2172c90669194",
+    "name": "INPUT from SAILS",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1130,
+    "y": 520,
+    "wires": []
+  },
+  {
+    "id": "beaaec7f8c83b2d0",
+    "type": "debug",
+    "z": "2fb2172c90669194",
+    "name": "OUTPUT to SERIAL",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1220,
+    "y": 740,
+    "wires": []
+  },
+  {
+    "id": "17184aa3462b9868",
+    "type": "debug",
+    "z": "2fb2172c90669194",
+    "name": "OUTPUT to SAILS",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 1050,
+    "y": 600,
+    "wires": []
+  },
+  {
+    "id": "fe5b1f1a13a89ba1",
+    "type": "rbe",
+    "z": "2fb2172c90669194",
+    "name": "if changes",
+    "func": "rbe",
+    "gap": "",
+    "start": "",
+    "inout": "out",
+    "septopics": true,
+    "property": "payload",
+    "topi": "port",
+    "x": 450,
+    "y": 560,
+    "wires": [["7a534dfad1723d83"]]
+  },
+  {
+    "id": "fdf78eeaa2efc9a2",
+    "type": "switch",
+    "z": "2fb2172c90669194",
+    "name": "if OK",
+    "property": "rc",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "200",
+        "vt": "num"
+      },
+      {
+        "t": "else"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 630,
+    "y": 920,
+    "wires": [["431dfe1e075079c9"], ["4ff4ef912cfe4c7c"]]
+  },
+  {
+    "id": "431dfe1e075079c9",
+    "type": "change",
+    "z": "2fb2172c90669194",
+    "name": "Store status",
+    "rules": [
+      {
+        "t": "set",
+        "p": "managingDevices[0].status",
+        "pt": "global",
+        "to": "payload.status",
+        "tot": "msg"
+      },
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "status stored",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 850,
+    "y": 940,
+    "wires": [["4ff4ef912cfe4c7c"]]
+  }
+]

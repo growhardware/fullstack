@@ -58,37 +58,51 @@ services:
     networks:
       - growhardware-net
 
-  # gh_org:
-  #   image: squidfunk/mkdocs-material
-  #   container_name: gh_org
-  #   volumes:
-  #     - ./org:/docs
-  #   ports:
-  #     - '8001:8000'
-  #   working_dir: /docs
-  #   command: serve -a 0.0.0.0:8000
-  #   networks:
-  #     - growhardware-net
-
   gh_org:
-    build: ./org # Asumiendo que ponés el Dockerfile ahí
+    image: python:3.9-slim
     container_name: gh_org
+    build: ./org
     ports:
       - '8001:8000'
     working_dir: /docs
     volumes:
       - ./org:/docs
-    command: serve -a 0.0.0.0:8000
+    command: sh -c "pip install -r requirements.txt && mkdocs serve --dev-addr 0.0.0.0:8000"
     networks:
       - growhardware-net
 
   gh_foundation:
+    volumes:
+        - ./node_modules:/app/node_modules  # Store node_modules on host
     build: ./foundation
     container_name: gh_foundation
     ports:
       - '8002:3000'
     networks:
       - growhardware-net
+  mqtt:
+    build: ./mqtt  # Esto se refiere a la carpeta donde está el Dockerfile de mqtt
+    container_name: gh_mqtt
+    ports:
+      - "1883:1883"   # Puerto MQTT
+      - "9001:9001"   # Si quieres habilitar la interfaz web
+    volumes:
+      - ./mqtt/mosquitto.conf:/etc/mosquitto/mosquitto.conf  # Montar el archivo de configuración
+      - mosquitto_data:/mosquitto/data  # Persistencia de datos
+      - mosquitto_log:/var/log/mosquitto  # Logs
+    networks:
+      - growhardware-net
+  nodered:
+    build: ./nodered
+    container_name: gh_nodered
+    ports:
+      - '1880:1880'
+    volumes:
+      - ./nodered:/data
+    networks:
+      - growhardware-net
+    depends_on:
+      - backend
 
 networks:
   growhardware-net:
@@ -96,3 +110,5 @@ networks:
 
 volumes:
   mongo_data:
+  mosquitto_data:
+  mosquitto_log:
