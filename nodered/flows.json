@@ -40,6 +40,14 @@
         "env": []
     },
     {
+        "id": "0d9f1688b3b2acd2",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "29efcda7762b3935",
         "type": "sails-config",
         "host": "http://localhost",
@@ -125,12 +133,28 @@
     {
         "id": "arduino-uno-serial",
         "type": "serial-port",
+        "name": "",
         "serialport": "/dev/ttyACM0",
         "serialbaud": "9600",
         "databits": "8",
         "parity": "none",
         "stopbits": "1",
+        "waitfor": "",
         "newline": "",
+        "bin": "false",
+        "out": "char",
+        "addchar": "false",
+        "responsetimeout": ""
+    },
+    {
+        "id": "a1df247d5b6a56a4",
+        "type": "serial-port",
+        "serialport": "/dev/ttyACM0",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
         "bin": "false",
         "out": "char",
         "addchar": false
@@ -1850,8 +1874,9 @@
         "type": "function",
         "z": "f45f16e7265c99cc",
         "name": "Format JSON for Serial",
-        "func": "let led = msg.payload.led;\nmsg.payload = JSON.stringify({ led: led }) + \"\\n\";\nreturn msg;",
+        "func": "// // let led = msg.payload.led;\n// // msg.payload = JSON.stringify({ led: led }) + \"\\n\";\n// // return msg;\n\n// // Obtener hora actual\n// const now = new Date();\n// const currentHour = now.getHours();\n\n// // Extraer datos del payload\n// let p = msg.payload;\n// let hasLed = typeof p.led !== \"undefined\";\n// let hasSchedule = typeof p.on_hour !== \"undefined\" && typeof p.off_hour !== \"undefined\";\n\n// let shouldControlLed = false;\n// let ledValue = false;\n\n// // Si hay control directo, usarlo\n// if (hasLed) {\n//     shouldControlLed = true;\n//     ledValue = p.led;\n// }\n\n// // Si hay horarios definidos, decidir si prender o apagar\n// if (hasSchedule) {\n//     let on = p.on_hour;\n//     let off = p.off_hour;\n\n//     let inRange = off > on\n//         ? (currentHour >= on && currentHour < off)\n//         : (currentHour >= on || currentHour < off);\n\n//     if (!hasLed) {\n//         shouldControlLed = true;\n//         ledValue = inRange;\n//     }\n// }\n\n// // Armar JSON para Arduino\n// let out = {};\n\n// if (shouldControlLed) out.led = ledValue;\n// if (hasSchedule) {\n//     out.on_hour = p.on_hour;\n//     out.off_hour = p.off_hour;\n// }\n\n// // Enviar como string por serial\n// msg.payload = JSON.stringify(out) + \"\\n\";\n// return msg;\n\n\n// // Obtenemos la hora actual del sistema\n// let now = new Date();\n// now.setHours(now.getHours() - 3);  // Ajuste horario GMT-3\n// let hh = now.getHours().toString().padStart(2, '0');\n// let mm = now.getMinutes().toString().padStart(2, '0');\n\n// let payload = {\n//   current_time: `${hh}:${mm}`\n// };\n\n// // Incluir programación horaria si está en msg.payload\n// if (msg.payload.on_time) {\n//   payload.on_time = msg.payload.on_time;\n// }\n// if (msg.payload.off_time) {\n//   payload.off_time = msg.payload.off_time;\n// }\n\n// // Incluir control manual si se envió\n// if (msg.payload.hasOwnProperty(\"led\")) {\n//   payload.led = msg.payload.led;\n// }\n\n// // Convertimos a JSON para enviar por Serial (Arduino espera string JSON)\n// msg.payload = JSON.stringify(payload) + \"\\n\";\n// return msg;\n\nlet now = new Date();\nnow.setHours(now.getHours() - 3);  // Ajuste horario GMT-3 (Uruguay)\n\nlet hh = now.getHours().toString().padStart(2, '0');\nlet mm = now.getMinutes().toString().padStart(2, '0');\n\nlet payload = {\n  current_time: `${hh}:${mm}`\n};\n\nif (msg.payload.on_time) payload.on_time = msg.payload.on_time;\nif (msg.payload.off_time) payload.off_time = msg.payload.off_time;\nif (msg.payload.hasOwnProperty(\"led\")) payload.led = msg.payload.led;\n\nnode.warn(`⏱️ Payload enviado: ${JSON.stringify(payload)}`);\nmsg.payload = JSON.stringify(payload) + \"\\n\";\nreturn msg;\n",
         "outputs": 1,
+        "timeout": "",
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -1860,7 +1885,8 @@
         "y": 260,
         "wires": [
             [
-                "serial-out"
+                "serial-out",
+                "36abc105f1dfd24c"
             ]
         ]
     },
@@ -1887,8 +1913,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 360,
-        "y": 260,
+        "x": 440,
+        "y": 240,
         "wires": [
             [
                 "function-to-serial",
@@ -1908,8 +1934,126 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 480,
+        "x": 560,
         "y": 380,
+        "wires": []
+    },
+    {
+        "id": "36abc105f1dfd24c",
+        "type": "debug",
+        "z": "f45f16e7265c99cc",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "0459383ca2ede4d4",
+        "type": "inject",
+        "z": "f45f16e7265c99cc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "{   \"led\": false }",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 700,
+        "y": 140,
+        "wires": [
+            [
+                "function-to-serial"
+            ]
+        ]
+    },
+    {
+        "id": "c61ea158f6bc4b26",
+        "type": "inject",
+        "z": "0d9f1688b3b2acd2",
+        "name": "Test Programar LED",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"led\":false, \"on_time\":\"20:00\", \"off_time\":\"20:02\"}",
+        "payloadType": "json",
+        "x": 590,
+        "y": 200,
+        "wires": [
+            [
+                "7cc4751965b45a73"
+            ]
+        ]
+    },
+    {
+        "id": "7cc4751965b45a73",
+        "type": "function",
+        "z": "0d9f1688b3b2acd2",
+        "name": "Format JSON for Serial",
+        "func": "// Obtenemos la hora actual del sistema\nlet now = new Date();\nnow.setHours(now.getHours() - 3);  // Ajuste horario GMT-3\nlet hh = now.getHours().toString().padStart(2, '0');\nlet mm = now.getMinutes().toString().padStart(2, '0');\n\nlet payload = {\n  current_time: `${hh}:${mm}`\n};\n\n// Incluir programación horaria si está en msg.payload\nif (msg.payload.on_time) {\n  payload.on_time = msg.payload.on_time;\n}\nif (msg.payload.off_time) {\n  payload.off_time = msg.payload.off_time;\n}\n\n// Incluir control manual si se envió\nif (msg.payload.hasOwnProperty(\"led\")) {\n  payload.led = msg.payload.led;\n}\n\nmsg.payload = JSON.stringify(payload) + \"\\n\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 200,
+        "wires": [
+            [
+                "623a85678f4a2b5c",
+                "4f6c8bc1d3d77533"
+            ]
+        ]
+    },
+    {
+        "id": "623a85678f4a2b5c",
+        "type": "debug",
+        "z": "0d9f1688b3b2acd2",
+        "name": "Debug JSON",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "4f6c8bc1d3d77533",
+        "type": "serial out",
+        "z": "0d9f1688b3b2acd2",
+        "name": "Serial to Arduino",
+        "serial": "a1df247d5b6a56a4",
+        "x": 1060,
+        "y": 220,
         "wires": []
     }
 ]
