@@ -27,7 +27,23 @@
         "id": "2fb2172c90669194",
         "type": "tab",
         "label": "Orchard Brain",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f45f16e7265c99cc",
+        "type": "tab",
+        "label": "Plan mqtt update",
         "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0d9f1688b3b2acd2",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -82,6 +98,66 @@
         "type": "sails-config",
         "host": "https://backend-production-98b7.up.railway.app",
         "port": "443"
+    },
+    {
+        "id": "32e02538b2d1b0c8",
+        "type": "mqtt-broker",
+        "name": "broker",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "arduino-uno-serial",
+        "type": "serial-port",
+        "name": "",
+        "serialport": "/dev/ttyACM0",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "newline": "",
+        "bin": "false",
+        "out": "char",
+        "addchar": "false",
+        "responsetimeout": ""
+    },
+    {
+        "id": "a1df247d5b6a56a4",
+        "type": "serial-port",
+        "serialport": "/dev/ttyACM0",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false
     },
     {
         "id": "8f029f8dd8b3645c",
@@ -1226,7 +1302,7 @@
         "type": "file in",
         "z": "2fb2172c90669194",
         "name": "Read Config",
-        "filename": "config.json",
+        "filename": "/data/config.json",
         "filenameType": "str",
         "format": "utf8",
         "chunk": false,
@@ -1351,10 +1427,10 @@
         "type": "watch",
         "z": "2fb2172c90669194",
         "name": "watch config.json",
-        "files": "/home/obrain/.node-red/projects/orchard-brain/config.json",
+        "files": "./config.json",
         "recursive": "",
-        "x": 680,
-        "y": 420,
+        "x": 660,
+        "y": 200,
         "wires": [
             [
                 "2f42e507194e660e"
@@ -1792,5 +1868,163 @@
                 "4ff4ef912cfe4c7c"
             ]
         ]
+    },
+    {
+        "id": "function-to-serial",
+        "type": "function",
+        "z": "f45f16e7265c99cc",
+        "name": "Format JSON for Serial",
+        "func": "let now = new Date();\nnow.setHours(now.getHours() - 3); // GMT-3\n\nlet hh = now.getHours().toString().padStart(2, '0');\nlet mm = now.getMinutes().toString().padStart(2, '0');\n\nlet payload = {\n  current_time: `${hh}:${mm}`\n};\n\n// Aseguramos que msg.payload es un objeto antes de acceder\nif (typeof msg.payload === \"object\" && msg.payload !== null) {\n  if (msg.payload.on_time) payload.on_time = msg.payload.on_time;\n  if (msg.payload.off_time) payload.off_time = msg.payload.off_time;\n  if (msg.payload.hasOwnProperty(\"led\")) payload.led = msg.payload.led;\n}\n\n// node.warn(`⏱️ Payload enviado: ${JSON.stringify(payload)}`);\n// 🔒 Aseguramos que sólo mandamos esto\nmsg.payload = JSON.stringify(payload) + \"\\n\";\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 260,
+        "wires": [
+            [
+                "serial-out",
+                "36abc105f1dfd24c"
+            ]
+        ]
+    },
+    {
+        "id": "serial-out",
+        "type": "serial out",
+        "z": "f45f16e7265c99cc",
+        "name": "Arduino UNO",
+        "serial": "arduino-uno-serial",
+        "x": 1050,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "b58be2ac968c512f",
+        "type": "mqtt in",
+        "z": "f45f16e7265c99cc",
+        "name": "BROKER",
+        "topic": "gh-mqtt/68580f68ea51b4cfd40eb9fe/updates",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "32e02538b2d1b0c8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 440,
+        "y": 240,
+        "wires": [
+            [
+                "function-to-serial",
+                "94d157fbe9e53136"
+            ]
+        ]
+    },
+    {
+        "id": "94d157fbe9e53136",
+        "type": "debug",
+        "z": "f45f16e7265c99cc",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "36abc105f1dfd24c",
+        "type": "debug",
+        "z": "f45f16e7265c99cc",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "c61ea158f6bc4b26",
+        "type": "inject",
+        "z": "0d9f1688b3b2acd2",
+        "name": "Test Programar LED",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"led\":false, \"on_time\":\"20:00\", \"off_time\":\"20:02\"}",
+        "payloadType": "json",
+        "x": 590,
+        "y": 200,
+        "wires": [
+            [
+                "7cc4751965b45a73"
+            ]
+        ]
+    },
+    {
+        "id": "7cc4751965b45a73",
+        "type": "function",
+        "z": "0d9f1688b3b2acd2",
+        "name": "Format JSON for Serial",
+        "func": "// Obtenemos la hora actual del sistema\nlet now = new Date();\nnow.setHours(now.getHours() - 3);  // Ajuste horario GMT-3\nlet hh = now.getHours().toString().padStart(2, '0');\nlet mm = now.getMinutes().toString().padStart(2, '0');\n\nlet payload = {\n  current_time: `${hh}:${mm}`\n};\n\n// Incluir programación horaria si está en msg.payload\nif (msg.payload.on_time) {\n  payload.on_time = msg.payload.on_time;\n}\nif (msg.payload.off_time) {\n  payload.off_time = msg.payload.off_time;\n}\n\n// Incluir control manual si se envió\nif (msg.payload.hasOwnProperty(\"led\")) {\n  payload.led = msg.payload.led;\n}\n\nmsg.payload = JSON.stringify(payload) + \"\\n\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 200,
+        "wires": [
+            [
+                "623a85678f4a2b5c",
+                "4f6c8bc1d3d77533"
+            ]
+        ]
+    },
+    {
+        "id": "623a85678f4a2b5c",
+        "type": "debug",
+        "z": "0d9f1688b3b2acd2",
+        "name": "Debug JSON",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1060,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "4f6c8bc1d3d77533",
+        "type": "serial out",
+        "z": "0d9f1688b3b2acd2",
+        "name": "Serial to Arduino",
+        "serial": "a1df247d5b6a56a4",
+        "x": 1060,
+        "y": 220,
+        "wires": []
     }
 ]

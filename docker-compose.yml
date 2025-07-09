@@ -92,6 +92,17 @@ services:
       - mosquitto_log:/var/log/mosquitto  # Logs
     networks:
       - growhardware-net
+  # nodered:
+  #   build: ./nodered
+  #   container_name: gh_nodered
+  #   ports:
+  #     - '1880:1880'
+  #   volumes:
+  #     - ./nodered:/data
+  #   networks:
+  #     - growhardware-net
+  #   depends_on:
+  #     - backend
   nodered:
     build: ./nodered
     container_name: gh_nodered
@@ -99,11 +110,17 @@ services:
       - '1880:1880'
     volumes:
       - ./nodered:/data
-    networks:
-      - growhardware-net
+    restart: unless-stopped
+    environment:
+      - NODE_RED_CREDENTIAL_SECRET=growhardware123
+    devices:
+      - "/dev/ttyACM0:/dev/ttyACM0" # solo si tenés ESP conectado
+    privileged: true
     depends_on:
       - backend
-
+      - mqtt
+    networks:
+      - growhardware-net
 networks:
   growhardware-net:
     driver: bridge
