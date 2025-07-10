@@ -42,7 +42,15 @@
     {
         "id": "0d9f1688b3b2acd2",
         "type": "tab",
-        "label": "Flow 2",
+        "label": "Test led",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f1cc3129d040fa3b",
+        "type": "tab",
+        "label": "Test serial",
         "disabled": true,
         "info": "",
         "env": []
@@ -158,6 +166,20 @@
         "bin": "false",
         "out": "char",
         "addchar": false
+    },
+    {
+        "id": "d5a8c0a6.3e0d58",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB0",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "false",
+        "responsetimeout": "10000"
     },
     {
         "id": "8f029f8dd8b3645c",
@@ -1955,6 +1977,65 @@
         "wires": []
     },
     {
+        "id": "e01a09e91fddbd19",
+        "type": "inject",
+        "z": "f45f16e7265c99cc",
+        "name": "Cada minuto",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 560,
+        "y": 580,
+        "wires": [
+            [
+                "a8e457d7ddd6c26b"
+            ]
+        ]
+    },
+    {
+        "id": "a8e457d7ddd6c26b",
+        "type": "function",
+        "z": "f45f16e7265c99cc",
+        "name": "Formatear hora",
+        "func": "// Obtener hora actual en formato HH:MM\nconst now = new Date();\nconst hours = now.getHours().toString().padStart(2, '0');\nconst minutes = now.getMinutes().toString().padStart(2, '0');\n\nmsg.payload = {\n    current_time: `${hours}:${minutes}`\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 580,
+        "wires": [
+            [
+                "eeb3449f2caf1e25"
+            ]
+        ]
+    },
+    {
+        "id": "eeb3449f2caf1e25",
+        "type": "serial out",
+        "z": "f45f16e7265c99cc",
+        "name": "Serial a Arduino",
+        "serial": "d5a8c0a6.3e0d58",
+        "x": 940,
+        "y": 580,
+        "wires": []
+    },
+    {
         "id": "c61ea158f6bc4b26",
         "type": "inject",
         "z": "0d9f1688b3b2acd2",
@@ -2025,6 +2106,141 @@
         "serial": "a1df247d5b6a56a4",
         "x": 1060,
         "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c3f49cf9eff81553",
+        "type": "inject",
+        "z": "f1cc3129d040fa3b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 440,
+        "y": 140,
+        "wires": [
+            [
+                "9cb62568ebbb0908"
+            ]
+        ]
+    },
+    {
+        "id": "9cb62568ebbb0908",
+        "type": "function",
+        "z": "f1cc3129d040fa3b",
+        "name": "function 1",
+        "func": "let now = new Date();\nnow.setHours(now.getHours() - 3); // Uruguay GMT-3\nlet hh = now.getHours().toString().padStart(2, '0');\nlet mm = now.getMinutes().toString().padStart(2, '0');\n\nmsg.payload = JSON.stringify({\n    current_time: `${hh}:${mm}`,\n    on_time: \"21:26\",\n    off_time: \"21:27\",\n    // led: false\n}) + \"\\n\";\n\nreturn msg;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 140,
+        "wires": [
+            [
+                "2839315a22c4f94e",
+                "150e4560b4f8dbee"
+            ]
+        ]
+    },
+    {
+        "id": "2839315a22c4f94e",
+        "type": "serial out",
+        "z": "f1cc3129d040fa3b",
+        "name": "",
+        "serial": "arduino-uno-serial",
+        "x": 940,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "150e4560b4f8dbee",
+        "type": "debug",
+        "z": "f1cc3129d040fa3b",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c5d3c5d0.8d1c68",
+        "type": "inject",
+        "z": "f1cc3129d040fa3b",
+        "name": "Cada minuto",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 460,
+        "y": 320,
+        "wires": [
+            [
+                "f3f7a7d0.9a8e3"
+            ]
+        ]
+    },
+    {
+        "id": "f3f7a7d0.9a8e3",
+        "type": "function",
+        "z": "f1cc3129d040fa3b",
+        "name": "Formatear hora",
+        "func": "// Obtener hora actual en formato HH:MM\nconst now = new Date();\nconst hours = now.getHours().toString().padStart(2, '0');\nconst minutes = now.getMinutes().toString().padStart(2, '0');\n\nmsg.payload = {\n    current_time: `${hours}:${minutes}`\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 320,
+        "wires": [
+            [
+                "a8b4e3d5.4c9d1"
+            ]
+        ]
+    },
+    {
+        "id": "a8b4e3d5.4c9d1",
+        "type": "serial out",
+        "z": "f1cc3129d040fa3b",
+        "name": "Serial a Arduino",
+        "serial": "d5a8c0a6.3e0d58",
+        "x": 840,
+        "y": 320,
         "wires": []
     }
 ]
