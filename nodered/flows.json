@@ -35,7 +35,7 @@
         "id": "f45f16e7265c99cc",
         "type": "tab",
         "label": "Plan mqtt update",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -51,7 +51,7 @@
         "id": "f1cc3129d040fa3b",
         "type": "tab",
         "label": "Test serial",
-        "disabled": true,
+        "disabled": false,
         "info": "",
         "env": []
     },
@@ -2142,7 +2142,7 @@
         "type": "function",
         "z": "f1cc3129d040fa3b",
         "name": "function 1",
-        "func": "let now = new Date();\nnow.setHours(now.getHours() - 3); // Uruguay GMT-3\nlet hh = now.getHours().toString().padStart(2, '0');\nlet mm = now.getMinutes().toString().padStart(2, '0');\n\nmsg.payload = JSON.stringify({\n    current_time: `${hh}:${mm}`,\n    on_time: \"21:26\",\n    off_time: \"21:27\",\n    // led: false\n}) + \"\\n\";\n\nreturn msg;\n\nreturn msg;",
+        "func": "let now = new Date();\nnow.setHours(now.getHours() - 3); // Uruguay GMT-3\nlet hh = now.getHours().toString().padStart(2, '0');\nlet mm = now.getMinutes().toString().padStart(2, '0');\n\nmsg.payload = JSON.stringify({\n    current_time: `${hh}:${mm}`,\n    on_time: \"22:26\",\n    off_time: \"22:27\",\n    // led: false\n}) + \"\\n\";\n\nreturn msg;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
