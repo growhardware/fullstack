@@ -35,7 +35,7 @@
         "id": "f45f16e7265c99cc",
         "type": "tab",
         "label": "Plan mqtt update",
-        "disabled": true,
+        "disabled": false,
         "info": "",
         "env": []
     },
@@ -51,7 +51,7 @@
         "id": "f1cc3129d040fa3b",
         "type": "tab",
         "label": "Test serial",
-        "disabled": false,
+        "disabled": true,
         "info": "",
         "env": []
     },
@@ -1917,7 +1917,7 @@
         "type": "serial out",
         "z": "f45f16e7265c99cc",
         "name": "Arduino UNO",
-        "serial": "arduino-uno-serial",
+        "serial": "a1df247d5b6a56a4",
         "x": 1050,
         "y": 260,
         "wires": []
@@ -1969,7 +1969,8 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
         "x": 880,
@@ -2010,7 +2011,7 @@
         "type": "function",
         "z": "f45f16e7265c99cc",
         "name": "Formatear hora",
-        "func": "// Obtener hora actual en formato HH:MM\nconst now = new Date();\nconst hours = now.getHours().toString().padStart(2, '0');\nconst minutes = now.getMinutes().toString().padStart(2, '0');\n\nmsg.payload = {\n    current_time: `${hours}:${minutes}`\n};\n\nreturn msg;",
+        "func": "// // Obtener hora actual en formato HH:MM\n// const now = new Date();\n// const hours = now.getHours().toString().padStart(2, '0');\n// const minutes = now.getMinutes().toString().padStart(2, '0');\n\n// msg.payload = {\n//     current_time: `${hours}:${minutes}`\n// };\n\n// return msg;\n\nlet now = new Date();\nnow.setHours(now.getHours() - 3); // GMT-3\n\nlet hh = now.getHours().toString().padStart(2, '0');\nlet mm = now.getMinutes().toString().padStart(2, '0');\n\nlet payload = {\n  current_time: `${hh}:${mm}`\n};\n\n// 🔒 Aseguramos que sólo mandamos esto\nmsg.payload = payload//JSON.stringify(payload) + \"\\n\";\nreturn msg;",
         "outputs": 1,
         "timeout": "",
         "noerr": 0,
@@ -2021,7 +2022,8 @@
         "y": 580,
         "wires": [
             [
-                "eeb3449f2caf1e25"
+                "eeb3449f2caf1e25",
+                "596a1585634c5057"
             ]
         ]
     },
@@ -2030,9 +2032,26 @@
         "type": "serial out",
         "z": "f45f16e7265c99cc",
         "name": "Serial a Arduino",
-        "serial": "d5a8c0a6.3e0d58",
+        "serial": "a1df247d5b6a56a4",
         "x": 940,
         "y": 580,
+        "wires": []
+    },
+    {
+        "id": "596a1585634c5057",
+        "type": "debug",
+        "z": "f45f16e7265c99cc",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 680,
         "wires": []
     },
     {
