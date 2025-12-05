@@ -1,0 +1,29 @@
+GrowHardware – Plataforma AgroTech de Código Abierto
+Copyright (C) 2020-2025 Federico Mello, Hernán Pereyra
+
+Este programa es software libre: usted puede redistribuirlo y/o
+modificarlo bajo los términos de la Licencia Pública General de
+Affero de GNU tal como la publica la Free Software Foundation,
+ya sea la versión 3 de la Licencia, o (a su elección)
+cualquier versión posterior.
+
+Este programa se distribuye con la esperanza de que sea útil,
+pero SIN NINGUNA GARANTÍA; sin siquiera la garantía implícita
+de COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR.
+Véase la Licencia Pública General de Affero de GNU para más detalles.
+
+Debe haber recibido una copia de la Licencia Pública General de
+Affero de GNU junto con este programa.
+Si no, consulte <https://www.gnu.org/licenses/>.
+
+Avisos Adicionales:
+
+- Este software puede depender de librerías de terceros con licencias
+  propias. Todas esas licencias continúan siendo aplicables.
+
+- Si modifica este software y lo pone a disposición a través de una red,
+  la AGPLv3 lo obliga a proporcionar el código fuente completo de la
+  versión modificada a todos los usuarios que interactúen con ella.
+
+- GrowHardware™, El Templo™, Templo Invisible™ son marcas
+  comerciales de Hernán Perluz. Su uso NO está cubierto por la AGPLv3.
