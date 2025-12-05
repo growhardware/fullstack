@@ -9,6 +9,7 @@ GrowHardware – Stack Dockerizado
 3. Usá estos comandos para levantar todo:
    git sumodule init
    git sumodule update
+   (o directamente git submodule --init --recursive)
    make up
 
 Servicios:
